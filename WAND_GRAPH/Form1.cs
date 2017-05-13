@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using _DCubeNoGimbalLock;
+using CPI.Plot3D;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,22 +32,23 @@ namespace WAND_GRAPH
             /*************************************************************************
             *                       Change Cursor
             *************************************************************************/
-            //try
-            //{
-            //    this.Cursor = AdvancedCursors.Create(Path.Combine(Application.StartupPath, "RadarBusy.ani"));
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-            //Application.EnableVisualStyles();
+            try
+            {
+                this.Cursor = AdvancedCursors.Create(Path.Combine(Application.StartupPath, "RadarBusy.ani"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            Application.EnableVisualStyles();
             //Application.Run(new Form1());
 
             /*************************************************************************
-            *                       
+            *                       DRAW 3D              
             *************************************************************************/
-
+            
         }
+       
         private void ChangeCursor(string curFile)
         {
             //Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors\", "Arrow", curFile);
@@ -70,6 +73,7 @@ namespace WAND_GRAPH
               RANGE = 20;
         public const UInt16 RES_X = 1366,
                             RES_Y = 768;
+        int flip = 0;
         /************************************************************
         *                  Mouse and Keyboard Hook 
         ************************************************************/
@@ -90,6 +94,7 @@ namespace WAND_GRAPH
         Point sp = new Point(1386 / 2, 768 / 2);
         Point ep = new Point(1368 / 2, 768 / 2);
         int Radius = 5;
+        float pitch, yaw;
         /************************************************************
         *                  Get Graphic
         ************************************************************/
@@ -110,6 +115,14 @@ namespace WAND_GRAPH
         *************************************************************************/
         BackgroundWorker m_oWorker;
         int i;
+        /*************************************************************************
+        *                       DRAW 3D
+        *************************************************************************/
+        [System.Runtime.InteropServices.DllImportAttribute("gdi32.dll")]
+        private static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, System.Int32 dwRop);
+
+        Math3D.Cube mainCube;
+        Point drawOrigin;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -124,7 +137,7 @@ namespace WAND_GRAPH
             mouseHook.MouseWheel += new RamGecTools.MouseHook.MouseHookCallback(mouseHook_MouseWheel);
 
             mouseHook.Install();
-            ChangeCursor(@"%SystemRoot%\cursors\RadarPrecision.cur");
+            //ChangeCursor(@"%SystemRoot%\cursors\RadarPrecision.cur");
             /************************************************************
             *                  Get Desktop
             ************************************************************/
@@ -202,18 +215,27 @@ namespace WAND_GRAPH
                     if ((w == "Pitch = ") || (w == "Roll = ") || (w == "Mag = ")) k = 1;
                     //Invoke(new Action(new Action(() => Data_Output.Text = w)));
                 }
-                float pitch = Get_Pitch_val(w),
-                      yaw = Get_Yaw_val(w);
+                pitch = Get_Pitch_val(w);
+                yaw = Get_Yaw_val(w);
+                Invoke(new Action(new Action(() => Bankinh.Text = YAW_CENTER.ToString())));
                 if ((pitch != -1) && (yaw != -1) && (count > 0))
                 {
                     win32.Win32.POINT pos = new win32.Win32.POINT();
 
                     pos = CalculatePos(pitch, yaw);
-
+                    Invoke(new Action(new Action(() => Bankinh.Text = pos.y.ToString())));
                     if (((pos.x - sp.X) > Radius) || ((pos.y - sp.Y) > Radius))
                     {
-                        win32.Win32.ClientToScreen(desktop, ref pos);
-                        win32.Win32.SetCursorPos(pos.y, pos.x);
+                        if (flip == 1)
+                        {
+                            win32.Win32.ClientToScreen(desktop, ref pos);
+                            win32.Win32.SetCursorPos(pos.y, pos.x);
+                        }
+                        else
+                        {
+                            win32.Win32.ClientToScreen(desktop, ref pos);
+                            win32.Win32.SetCursorPos(RES_Y - pos.y, pos.x);
+                        }
                     }
 
                     ep.X = pos.x;
@@ -230,7 +252,7 @@ namespace WAND_GRAPH
                      **************************************/
 
                     chart1.Series["Series1"].Points.Add(pitch);
-                    chart1.Series["Series2"].Points.Add(yaw);
+                    chart1.Series["Series2"].Points.Add(yaw);                
 
                     chart1.Series["Series1"].ChartType = SeriesChartType.Spline;
                     chart1.Series["Series1"].Color = Color.Red;
@@ -240,11 +262,16 @@ namespace WAND_GRAPH
 
                     chart1.Series["Series3"].ChartType = SeriesChartType.Spline;
                     chart1.Series["Series3"].Color = Color.Yellow;
+                    /**************************************
+                     *           Render cube
+                     **************************************/
+                    Render(pitch - PITCH_CENTER, yaw - YAW_CENTER, 0);
 
-                    if ((count == 0) && (pitch != -1) && (yaw != -1) && (pitch < 90) && (yaw < 300))
-                    {
-                        getMAX_MIN(pitch, yaw);
-                    }
+                }
+                else if ((count == 0) && (pitch != -1) && (yaw != -1) && (pitch < 90) && (yaw < 300))
+                {
+                    getMAX_MIN(pitch, yaw);
+                    count = 1;
                 }
                 received_flag = 0;
             }
@@ -296,7 +323,7 @@ namespace WAND_GRAPH
 
         private void Bankinh_TextChanged(object sender, EventArgs e)
         {
-            SetRadius(Convert.ToInt16(this.Text));
+            //SetRadius(Convert.ToInt16(this.Text));
         }
 
         void mouseHook_LeftButtonDown(RamGecTools.MouseHook.MSLLHOOKSTRUCT mouseStruct)
@@ -323,6 +350,14 @@ namespace WAND_GRAPH
             //keyboardLog.Text = "[" + DateTime.Now.ToLongTimeString() + "] KeyUp Event {" + key.ToString() + "}" + Environment.NewLine + keyboardLog.Text;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            mainCube = new Math3D.Cube(100, 200, 75);
+            drawOrigin = new Point(pictureBox1.Width / 2, pictureBox1.Height / 2);
+
+            Render(0, 0, 0);
+        }
+
         void keyboardHook_KeyDown(RamGecTools.KeyboardHook.VKeys key)
         {
 
@@ -342,6 +377,24 @@ namespace WAND_GRAPH
             string temp = s.Substring(i + 6, (j - i - 6));
             return float.Parse(temp);
         }
+
+        private void Fill_Check_CheckedChanged(object sender, EventArgs e)
+        {
+            mainCube.FillBack = Fill_Check.Checked;
+            //mainCube.FillBottom = Fill_Check.Checked;
+            //mainCube.FillFront = Fill_Check.Checked;
+            mainCube.FillLeft = Fill_Check.Checked;
+            mainCube.FillRight = Fill_Check.Checked;
+            mainCube.FillTop = Fill_Check.Checked;
+
+            this.Refresh();
+        }
+
+        private void Fill_Check_Paint(object sender, PaintEventArgs e)
+        {
+            Render(pitch - PITCH_CENTER, yaw - YAW_CENTER, 0);
+        }
+
         private float Get_Yaw_val(string s)
         {
             int i = s.IndexOf("Yaw ");
@@ -436,6 +489,60 @@ namespace WAND_GRAPH
                 }
             }
             return pos;
+        }
+        public void DrawSquare(Plotter3D p, float sideLength)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                p.Forward(sideLength);  // Draw a line sideLength long
+                p.TurnRight(90);        // Turn right 90 degrees
+            }
+        }
+        private void DrawRotatedSquare(Plotter3D p, float sideLength, float rotationAngle)
+        {
+            // Since we don't want to draw while repositioning ourselves at the
+            // center of the object, we'll lift the pen up
+            p.PenUp();
+
+            // Move to the center of the square
+            p.Forward(sideLength / 2);
+            p.TurnRight(90);
+            p.Forward(sideLength / 2);
+            p.TurnLeft(90);
+
+            // Now we rotate as much as we want
+            p.TurnRight(rotationAngle);
+
+            // Now we retrace our steps to get back
+            // to the (rotated) starting point
+            p.TurnLeft(90);
+            p.Forward(sideLength / 2);
+            p.TurnLeft(90);
+            p.Forward(sideLength / 2);
+            p.TurnRight(180);
+
+            // Put the pen back down, so we start drawing again
+            p.PenDown();
+
+            // Finally we draw the square as we normally would
+            DrawSquare(p, sideLength);
+        }
+        public void DrawCube(Plotter3D p, float sideLength)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                DrawSquare(p, sideLength);
+                p.Forward(sideLength);
+                p.TurnDown(90);
+            }
+        }
+        private void Render(float tX, float tY, float tZ)
+        {
+            mainCube.RotateX = (float)tX;
+            mainCube.RotateY = (float)tY;
+            mainCube.RotateZ = (float)tZ;
+
+            pictureBox1.Image = mainCube.DrawCube(drawOrigin);
         }
     }
 }

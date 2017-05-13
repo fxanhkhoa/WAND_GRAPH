@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 14.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="14.0">
+ <Targets>
+  <Target Name="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D\bin\Debug\CPI.Plot3D.dll">
+   <Modules>
+    <Module Name="cpi.plot3d.dll">
+     <Namespaces>
+      <Namespace Name="CPI.Plot3D">
+       <Types>
+        <Type Name="Plotter3D" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Drawing.Graphics)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Plotter3D.cs" Line="48">In method 'Plotter3D.Plotter3D(Graphics)', call System.IDisposable.Dispose on object 'new Pen(Color.Black)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#.ctor(System.Drawing.Graphics,CPI.Plot3D.Point3D)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Plotter3D.cs" Line="62">In method 'Plotter3D.Plotter3D(Graphics, Point3D)', call System.IDisposable.Dispose on object 'new Pen(Color.Black)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="NonBreaking">
+             <Issue Name="NotCalled" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Plotter3D.cs" Line="452">Change 'Plotter3D.Dispose()' to call 'GC.SuppressFinalize(object)'. This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TurnDown(System.Double)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="TurnDown" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberShouldBeDiscreteTerm" Certainty="80" Level="Error" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Plotter3D.cs" Line="403">The compound word 'TurnDown' in member name 'Plotter3D.TurnDown(double)' exists as a discrete term. If your usage is intended to be single word, case it as 'Turndown' or strip the first token entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Point3D" Kind="Struct" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Single,System.Single,System.Single)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="40">In method 'Point3D.Point3D(float, float, float)', consider providing a more meaningful name than parameter name 'x'.</Issue>
+            </Message>
+            <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="40">In method 'Point3D.Point3D(float, float, float)', consider providing a more meaningful name than parameter name 'y'.</Issue>
+            </Message>
+            <Message Id="z" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="40">In method 'Point3D.Point3D(float, float, float)', consider providing a more meaningful name than parameter name 'z'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Equality(CPI.Plot3D.Point3D,CPI.Plot3D.Point3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="225">In method 'Point3D.operator ==(Point3D, Point3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="225">In method 'Point3D.operator ==(Point3D, Point3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Inequality(CPI.Plot3D.Point3D,CPI.Plot3D.Point3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="236">In method 'Point3D.operator !=(Point3D, Point3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="236">In method 'Point3D.operator !=(Point3D, Point3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#X" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="X" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="64">Consider providing a more meaningful name than member name 'Point3D.X'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Y" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="75">Consider providing a more meaningful name than member name 'Point3D.Y'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Z" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Z" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Point3D.cs" Line="86">Consider providing a more meaningful name than member name 'Point3D.Z'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Vector3D" Kind="Struct" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Single,System.Single,System.Single)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="89">In method 'Vector3D.Vector3D(float, float, float)', consider providing a more meaningful name than parameter name 'x'.</Issue>
+            </Message>
+            <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="89">In method 'Vector3D.Vector3D(float, float, float)', consider providing a more meaningful name than parameter name 'y'.</Issue>
+            </Message>
+            <Message Id="z" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="89">In method 'Vector3D.Vector3D(float, float, float)', consider providing a more meaningful name than parameter name 'z'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CrossProduct(CPI.Plot3D.Vector3D)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="272">In method 'Vector3D.CrossProduct(Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Addition(CPI.Plot3D.Point3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="374">In method 'Vector3D.operator +(Point3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="374">In method 'Vector3D.operator +(Point3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Addition(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="477">In method 'Vector3D.operator +(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="477">In method 'Vector3D.operator +(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Division(CPI.Plot3D.Vector3D,System.Double)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="544">In method 'Vector3D.operator /(Vector3D, double)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="544">In method 'Vector3D.operator /(Vector3D, double)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Equality(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="352">In method 'Vector3D.operator ==(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="352">In method 'Vector3D.operator ==(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Inequality(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="363">In method 'Vector3D.operator !=(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="363">In method 'Vector3D.operator !=(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Multiply(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="513">In method 'Vector3D.operator *(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="513">In method 'Vector3D.operator *(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Multiply(CPI.Plot3D.Vector3D,System.Double)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="427">In method 'Vector3D.operator *(Vector3D, double)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="427">In method 'Vector3D.operator *(Vector3D, double)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Multiply(System.Double,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="450">In method 'Vector3D.operator *(double, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="450">In method 'Vector3D.operator *(double, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Subtraction(CPI.Plot3D.Point3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="396">In method 'Vector3D.operator -(Point3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="396">In method 'Vector3D.operator -(Point3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_Subtraction(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="493">In method 'Vector3D.operator -(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+            <Message Id="b" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="493">In method 'Vector3D.operator -(Vector3D, Vector3D)', consider providing a more meaningful name than parameter name 'b'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#op_UnaryNegation(CPI.Plot3D.Vector3D)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="a" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="461">In method 'Vector3D.operator -(Vector3D)', consider providing a more meaningful name than parameter name 'a'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Rotate(CPI.Plot3D.Vector3D,System.Double)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="NonBreaking">
+             <Issue Name="IncorrectParameterName" Certainty="95" Level="CriticalError" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="309">Method 'Vector3D.Rotate(Vector3D, double)' passes 'rotationAngle.' as the 'paramName' argument to a 'ArgumentException' constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#X" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="X" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="110">Consider providing a more meaningful name than member name 'Vector3D.X'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Y" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="121">Consider providing a more meaningful name than member name 'Vector3D.Y'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Z" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Z" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2017-05-11 10:03:34Z" FixCategory="Breaking">
+             <Issue Name="MemberMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\Plot3D_src\CPI.Plot3D\CPI.Plot3D" File="Vector3D.cs" Line="132">Consider providing a more meaningful name than member name 'Vector3D.Z'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+   <Name>Call GC.SuppressFinalize correctly</Name>
+   <Description>Call GC.SuppressFinalize to suppress finalization of your instance once Dispose has been called. Objects that implement IDisposable should call SuppressFinalize from the IDisposable.Dispose method to prevent the garbage collector from calling Object.Finalize on an object that does not require it.</Description>
+   <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182269.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
+   <Name>Compound words should be cased correctly</Name>
+   <Description>Avoid creating compound words from terms which exist in the dictionary as discrete terms. Do not create a compound word such as 'StopWatch' or 'PopUp'. These terms are recognized in the dictionary and should be cased as 'Stopwatch' and 'Popup'.</Description>
+   <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264474.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="80">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000">
+   <Name>Dispose objects before losing scope</Name>
+   <Description>If a disposable object is not explicitly disposed before all references to it are out of scope, the object will be disposed at some indeterminate time when the garbage collector runs the finalizer of the object. Because an exceptional event might occur that will prevent the finalizer of the object from running, the object should be explicitly disposed instead.</Description>
+   <Resolution Name="NonExceptionEdge">In method {0}, call System.IDisposable.Dispose on object {1} before all references to it are out of scope.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182289.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+   <Name>Identifiers should be spelled correctly</Name>
+   <Description>The individual words that make up an identifier should not be abbreviated and should be spelled correctly. If this rule generates a false positive on a term that should be recognized, add the word to the FxCop custom dictionary.</Description>
+   <Resolution Name="MemberMoreMeaningfulName">Consider providing a more meaningful name than member name {0}.</Resolution>
+   <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb264492.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="namingrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+   <Name>Instantiate argument exceptions correctly</Name>
+   <Description>String arguments passed to constructors of ArgumentException and its derived types should be correct. Types derived from ArgumentException have inconsistent constructor overloads with respect to the message and paramName parameters as compared to ArgumentException.</Description>
+   <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182347.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

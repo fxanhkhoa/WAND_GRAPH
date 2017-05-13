@@ -7,3 +7,6 @@ c:\users\anh khoa\documents\visual studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bi
 c:\users\anh khoa\documents\visual studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\WAND_GRAPH.pdb
 c:\users\anh khoa\documents\visual studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\obj\Debug\WAND_GRAPH.exe
 c:\users\anh khoa\documents\visual studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\obj\Debug\WAND_GRAPH.pdb
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.dll
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.pdb
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.xml

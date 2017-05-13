@@ -1,0 +1,813 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CPI.Plot3D</name>
+    </assembly>
+    <members>
+        <member name="T:CPI.Plot3D.AngleMeasurement">
+            <summary>
+            Represents whether an angle is specified in degrees or radians.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.AngleMeasurement.Degrees">
+            <summary>
+            Angles are represented in degrees
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.AngleMeasurement.Radians">
+            <summary>
+            Angles are represented in radians
+            </summary>
+        </member>
+        <member name="T:CPI.Plot3D.Orientation3D">
+            <summary>
+            Represents an orientation in 3D space.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.#ctor">
+            <summary>
+            Instantiates a new Orientation object.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.#ctor(CPI.Plot3D.Orientation3D)">
+            <summary>
+            Creates a deep copy of an existing orientation object.
+            </summary>
+            <param name="source">The source orientation for the copy.</param>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.AngleMeasurement">
+            <summary>
+            Gets or sets whether angles are measured in degrees or radians.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.ForwardVector">
+            <summary>
+            Gets a unit vector representing the forward direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.BackwardVector">
+            <summary>
+            Gets a unit vector representing the backward direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.LeftVector">
+            <summary>
+            Gets a unit vector representing the left direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.RightVector">
+            <summary>
+            Gets a unit vector representing the right direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.UpVector">
+            <summary>
+            Gets a unit vector representing the up direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Orientation3D.DownVector">
+            <summary>
+            Gets a unit vector representing the down direction from the object's perspective.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.YawRight(System.Double)">
+            <summary>
+            Rotates right around the up/down axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.YawLeft(System.Double)">
+            <summary>
+            Rotates left around the up/down axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.PitchUp(System.Double)">
+            <summary>
+            Rotates up around the left/right axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.PitchDown(System.Double)">
+            <summary>
+            Rotates down around the left/right axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.RollRight(System.Double)">
+            <summary>
+            Rotates right around the forward/backward axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.RollLeft(System.Double)">
+            <summary>
+            Rotates left around the forward/backward axis.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.DegreesToRadians(System.Double)">
+            <summary>
+            Converts from degrees to radians.
+            </summary>
+            <param name="degrees">An angle specified in degrees.</param>
+            <returns>An angle specified in radians.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.RadiansToDegrees(System.Double)">
+            <summary>
+            Converts from radians to degrees.
+            </summary>
+            <param name="radians">An angle specified in radians.</param>
+            <returns>An angle specified in degrees.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.Clone">
+            <summary>
+            Performs a deep copy of the Orientation object.
+            </summary>
+            <returns>A deep copy of the Orientation object.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Orientation3D.System#ICloneable#Clone">
+            <summary>
+            Performs a deep copy of the Orientation object.
+            </summary>
+            <returns>A deep copy of the Orientation object.</returns>
+        </member>
+        <member name="T:CPI.Plot3D.Plotter3D">
+            <summary>
+            Plots points and draws lines in 3D space.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.#ctor(System.Drawing.Graphics)">
+            <summary>
+            Instantiates a new Plotter.
+            </summary>
+            <param name="canvas">The Graphics object that we want to draw on.</param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.#ctor(System.Drawing.Graphics,System.Drawing.Pen)">
+            <summary>
+            Instantiates a new Plotter.
+            </summary>
+            <param name="canvas">The Graphics object that we want to draw on.</param>
+            <param name="pen">The pen we want to use to draw on the canvas.</param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.#ctor(System.Drawing.Graphics,CPI.Plot3D.Point3D)">
+            <summary>
+            Instantiates a new Plotter.
+            </summary>
+            <param name="canvas">The Graphics object that we want to draw on.</param>
+            <param name="cameraLocation">The location of the camera that we use to calculate perspective.</param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.#ctor(System.Drawing.Graphics,System.Drawing.Pen,CPI.Plot3D.Point3D)">
+            <summary>
+            Instantiates a new Plotter.
+            </summary>
+            <param name="canvas">The Graphics object that we want to draw on.</param>
+            <param name="pen">The pen we want to use to draw on the canvas.</param>
+            <param name="cameraLocation">The location of the camera that we use to calculate perspective.</param>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.Orientation">
+            <summary>
+            Gets or sets the orientation of the cursor.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.Pen">
+            <summary>
+            Gets or sets the pen used to draw on the canvas.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.PenColor">
+            <summary>
+            Gets or sets the color of the pen used to draw on the canvas.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.PenWidth">
+            <summary>
+            Gets or sets the width of the pen used to draw on the canvas.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.IsPenDown">
+            <summary>
+            Gets or sets the drawing mode of the plotter.  If IsPenDown == true, moving the pen
+            around will draw on the canvas.  If IsPenDown == false, moving the pen around will 
+            change the position of the pen, but won't draw anything.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.Location">
+            <summary>
+            Gets or sets the cursor's location in 3D space.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.CameraLocation">
+            <summary>
+            Gets the location of the camera used to determine perspective
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.Canvas">
+            <summary>
+            Gets the graphics object to draw on.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.AngleMeasurement">
+            <summary>
+            Gets or sets whether angles are measured in degrees or radians.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Plotter3D.BoundingBox">
+            <summary>
+            Gets a rectangle that contains everything that's been drawn so far.
+            </summary>
+            <remarks>
+            The math here is a little imprecise (especially when you're dealing with
+            a PenWidth > 1) but the box should contain AT LEAST the bounds of the drawing,
+            possibly with a couple of pixels of padding on each side.
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.Forward(System.Double)">
+            <summary>
+            Moves the cursor forward, and draws a line from the start point to the end point
+            if IsPenDown == true.
+            </summary>
+            <param name="distance">The distance to move forward.</param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.MoveTo(CPI.Plot3D.Point3D)">
+            <summary>
+            Moves the cursor to the specified location, and draws a line from teh start point 
+            to the end point if IsPenDown == true.
+            </summary>
+            <param name="newLocation">The location to move the cursor to.</param>
+            <remarks>
+            This method allows you to draw a line to an absolute point, which runs counter
+            to the spirit of this library.  This library uses relative positioning, which 
+            allows you to define an object relatively, then move or rotate it however you like,
+            and that all falls apart as soon as you start using absolute positioning.  Nevertheless,
+            there are some times when it's useful to be able to draw a line to an absolute position,
+            so there are times when this method is handy.  But use it sparingly.
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.PenDown">
+            <summary>
+            Sets the IsPenDown property to true.
+            </summary>
+            <remarks>
+            This method has been included because I think that 
+                p.PenDown();
+            is more readable than
+                p.IsPenDown = true;
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.PenUp">
+            <summary>
+            Sets the IsPenDown property to false.
+            </summary>
+            <remarks>
+            This method has been included because I think that
+                p.PenUp();
+            is more readable than
+                p.IsPenDown = false;
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.TurnRight(System.Double)">
+            <summary>
+            Rotates the cursor right, relative to its current orientation.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.TurnLeft(System.Double)">
+            <summary>
+            Rotates the cursor left, relative to its current orientation.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.TurnUp(System.Double)">
+            <summary>
+            Rotates the cursor up, relative to its current orientation.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.TurnDown(System.Double)">
+            <summary>
+            Rotates the cursor down, relative to its current orientation.
+            </summary>
+            <param name="angle">
+            The rotation angle in degrees or radians depending on the value
+            of the AngleMeasurement property.
+            </param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.ExpandBoundingBox(System.Drawing.PointF)">
+            <summary>
+            Expands the bounding box as you draw so that the box always contains the
+            drawing entirely.
+            </summary>
+            <param name="point">A new point being drawn.</param>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.Dispose">
+            <summary>
+            Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Plotter3D.Dispose(System.Boolean)">
+            <summary>
+            Disposes of the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:CPI.Plot3D.Point3D">
+            <summary>
+            Represents a location in 3D space.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Point3D.Tolerance">
+            <summary>
+            The maximum distance two coordinates can be from each other
+            for them to be considered approximately equal.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Instantiates a new Point3D.
+            </summary>
+            <param name="x">The point's X coordinate.</param>
+            <param name="y">The point's Y coordinate.</param>
+            <param name="z">The point's Z coordinate.</param>
+        </member>
+        <member name="P:CPI.Plot3D.Point3D.X">
+            <summary>
+            The point's X coordinate.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Point3D.Y">
+            <summary>
+            The point's Y coordinate.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Point3D.Z">
+            <summary>
+            The point's Z coordinate.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.GetScreenPosition(CPI.Plot3D.Point3D)">
+            <summary>
+            Gets the location of the point projected onto the XY plane at the Z origin, from a specified
+            camera's perspective.
+            </summary>
+            <param name="cameraPosition">The location to base perspective calculations on.</param>
+            <returns>A PointF representing the projected point.</returns>
+            <remarks>
+            Calculations are internally performed with double precision arithmetic, then rounded
+            down to floats at the end.
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.ApproximatelyEquals(CPI.Plot3D.Point3D)">
+            <summary>
+            Determines whether this instance is very nearly equal to a specified Point3D structure.
+            </summary>
+            <remarks>
+            Since floating point math is kind of fuzzy, we're taking a "close enough" approach 
+            to equality with this method.  If the individual coordinates of two points fall within
+            a small tolerance, we'll consider them to be approximately equal.
+             
+            Remember, though, that the uncertainty here can be cumulative.  For example:
+            if pointA.Equals(pointB) and pointB.Equals(pointC), then it's an absolute certainty
+            that pointA.Equals(pointC).
+            However, if pointD.ApproximatelyEquals(pointE) and pointE.ApproximatelyEquals(pointF),
+            it is NOT certain whether pointD.ApproximatelyEquals(pointF).
+            </remarks>
+            <param name="other">A Point3D structure to compare to this instance.</param>
+            <returns>True if the X,Y,Z components are approximately equal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.ToString(System.Int32)">
+            <summary>
+            Returns a string representation of the point in [X,Y,Z] format, with each coordinate 
+            rounded to the specified number of digits.
+            </summary>
+            <param name="decimalPlaces">The number of decimal digits to round the output to.</param>
+            <returns>A string representing the point's XYZ coordinates.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.ToString">
+            <summary>
+            Returns a string representation of the point in [X,Y,Z] format.
+            </summary>
+            <returns>A string representing the point's XYZ coordinates.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object. 
+            </summary>
+            <param name="obj">An object to compare with this instance. </param>
+            <returns>True if the object equals this instance; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.GetHashCode">
+            <summary>
+            Returns the hash code for this instance. 
+            </summary>
+            <remarks>
+            The hash code is based on the hash codes of the X, Y, and Z coordinates of the point,
+            but we can't just XOR them all together, otherwise [3,4,5] would return the same hash 
+            code as [5,3,4], and we wouldn't want that.  So to get a more even distribution, we 
+            rotate hashY's bits by 8, and hashZ's bits by 16, then we XOR them all together.
+            (It's also worth pointing out that we're casting the individual hash codes to uints before
+            operating on them because we want our shift operations to use unsigned semantics.)
+            </remarks>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.op_Equality(CPI.Plot3D.Point3D,CPI.Plot3D.Point3D)">
+            <summary>
+            Determines whether the specified Point3D instances are equal.
+            </summary>
+            <param name="a">The first Point3D instance to compare.</param>
+            <param name="b">The second Point3D instance to compare.</param>
+            <returns>True if the Point3D instances are equal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.op_Inequality(CPI.Plot3D.Point3D,CPI.Plot3D.Point3D)">
+            <summary>
+            Determines whether the specified Point3D instances are unequal.
+            </summary>
+            <param name="a">The first Point3D instance to compare.</param>
+            <param name="b">The second Point3D instance to compare.</param>
+            <returns>True if the Point3D instances are unequal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Point3D.Equals(CPI.Plot3D.Point3D)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified Point3D structure. 
+            </summary>
+            <param name="other">A Point3D structure to compare to this instance.</param>
+            <returns>True if the X,Y,Z components are the same; false otherwise.</returns>
+        </member>
+        <member name="T:CPI.Plot3D.Vector3D">
+            <summary>
+            Represents a distance and direction in 3 dimensions.
+            </summary>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            Chapters 4-6
+            </see>
+            <remarks>
+            This struct is the primary building block for just about every interesting thing that
+            this library can do.  If you're interested in understanding how and why this
+            library works, I suggest that you first become intimately aware of every 
+            method in this structure.  There's nothing particularly complex that happens here;
+            it's all pretty straightforward trigonometry.  But it gets used to great effect by
+            the Orientation class and the Plotter class, so you should really understand what
+            it's doing.
+            </remarks>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.Tolerance">
+            <summary>
+            The maximum distance two coordinates can be from each other
+            for them to be considered approximately equal.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.Zero">
+            <summary>
+            The zero vector, which represents neither distance nor direction.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.PositiveX">
+            <summary>
+            A unit vector pointing in a positive direction along the X axis.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.NegativeX">
+            <summary>
+            A unit vector pointing in a negative direction along the X axis.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.PositiveY">
+            <summary>
+            A unit vector pointing in a positive direction along the Y axis.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.NegativeY">
+            <summary>
+            A unit vector pointing in a negative direction along the Y axis.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.PositiveZ">
+            <summary>
+            A unit vector pointing in a positive direction along the Z axis.
+            </summary>
+        </member>
+        <member name="F:CPI.Plot3D.Vector3D.NegativeZ">
+            <summary>
+            A unit vector pointing in a negative direction along the Z axis.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Create an instance of Vector3D with the specified x, y, z coordinates.
+            </summary>
+            <param name="x">The X coordinate of the endpoint</param>
+            <param name="y">The Y coordinate of the endpoint</param>
+            <param name="z">The Z coordinate of the endpoint</param>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.#ctor(CPI.Plot3D.Point3D)">
+            <summary>
+            Create an instance of Vector3D with the specified endpoint.
+            </summary>
+            <param name="endPoint">The endpoint of the vector.</param>
+        </member>
+        <member name="P:CPI.Plot3D.Vector3D.X">
+            <summary>
+            The X coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Vector3D.Y">
+            <summary>
+            The Y coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Vector3D.Z">
+            <summary>
+            The Z coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Vector3D.Length">
+            <summary>
+            The length of the vector.
+            </summary>
+        </member>
+        <member name="P:CPI.Plot3D.Vector3D.EndPoint">
+            <summary>
+            The end point of the vector.
+            </summary>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.ToString">
+            <summary>
+            Returns a string representation of the vector's endpoint in [X,Y,Z] format.
+            </summary>
+            <returns>A string representing the endpoint's XYZ coordinates.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object. 
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>True if the object is a Vector3D and the vectors are the same; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+            <remarks>
+            Since the Vector3D's equality methods are based on its underlying Point3D endPoint, it stands
+            to reason that its hash code also needs to be based on the the endPoint.  But we don't just
+            want to return the same number for the two different classes.  So instead, we get the hash 
+            code for the endPoint and flip all its bits, which gives us a very different number, but 
+            very closely related to our source.
+            That means that for any Vector3D v, v.GetHashCode() ^ v.endPoint.GetHashCode() == -1,
+            in case you're interested.
+            </remarks>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.ApproximatelyEquals(CPI.Plot3D.Vector3D)">
+            <summary>
+            Determines whether this instance is very nearly equal to a specified Vector3D structure.
+            </summary>
+            <remarks>
+            This is implemented by performaning an ApproximatelyEquals call on the Point3D endPoints
+            of the two vectors.
+            </remarks>
+            <param name="other">A Vector3D structure to compare to this instance.</param>
+            <returns>True if the vectors are approximately equal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.ToString(System.Int32)">
+            <summary>
+            Returns a string representation of the vector's endpoint in [X,Y,Z] format, 
+            with each coordinate rounded to the specified number of digits.
+            </summary>
+            <param name="decimalPlaces">The number of decimal digits to round the output to.</param>
+            <returns>A string representing the endpoint's XYZ coordinates.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.Normalize">
+            <summary>
+            Returns a Vector3D with the same direction as this vector, but with a length of 1.
+            (Otherwise known as a unit vector.)
+            </summary>
+            <returns>A unit vector with the same direction as the current vector.</returns>
+            <see>http://en.wikipedia.org/wiki/Unit_vector</see>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 53-4
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.CrossProduct(CPI.Plot3D.Vector3D)">
+            <summary>
+            Returns the cross product of two vectors, which is the vector which is perpendicular
+            to the two vectors with a magnitude equal to the area of the parallelogram they span.
+            </summary>
+            <param name="a">A vector object.</param>
+            <returns>The cross product of the two vectors.</returns>
+            <see>http://en.wikipedia.org/wiki/Cross_product</see>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 62-5
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.Rotate(CPI.Plot3D.Vector3D,System.Double)">
+            <summary>
+            Rotates the vector around an arbitrary axis.
+            </summary>
+            <param name="rotationAxis">A Vector3D representing the axis to rotate around.</param>
+            <param name="rotationAngle">The angle, in radians, to rotate the vector.</param>
+            <returns>A rotated vector.</returns>
+            <remarks>
+            If you have the book "3D Math Primer for Graphics and Game Development", it might be useful
+            to look at figure 8.12 on page 110 for a visual of what we're actually doing in this method.  
+            Here's a translation between the variable names in this method and the variable names 
+            in the diagram:
+            
+            this = v
+            rotationAxis = n
+            parallelVector = v[parallel]
+            perpendicularVector = v[perpendicular]
+            mutuallyPerpendicularVector = w
+            rotatedPerpendicularVector = v'[perpendicular]
+            rotatedVector = v'
+            
+            </remarks>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 109-111
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Equality(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Determines whether the specified vectors are equal.
+            </summary>
+            <param name="a">The first Vector3D instance to compare.</param>
+            <param name="b">The second Vector3D instance to compare.</param>
+            <returns>True if the Vector3D instances are equal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Inequality(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Determines whether the specified vectors are unequal.
+            </summary>
+            <param name="a">The first Vector3D instance to compare.</param>
+            <param name="b">The second Vector3D instance to compare.</param>
+            <returns>True if the Vector3D instances are unequal; false otherwise.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Addition(CPI.Plot3D.Point3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Moves a point the length of a specified vector.
+            </summary>
+            <param name="a">A Point3D object.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>A Point3D object moved the distance and direction specified by the vector.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Subtraction(CPI.Plot3D.Point3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Moves a point the length of the inverse of a specifed vector.
+            </summary>
+            <param name="a">A Point3D object.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>A Point3D object moved the distance and the inverse of the direction specifed by the vector.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Multiply(CPI.Plot3D.Vector3D,System.Double)">
+            <summary>
+            Multiplying a vector by a scalar results in a vector with the same (or exactly opposite)
+            direction as the original, but with a different length.
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <param name="b">A double.</param>
+            <returns>
+            A Vector3D instance with the same (or exactly opposite) direction as the original, 
+            but with a length multiplied by the specified number.
+            </returns>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 51-2
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Multiply(System.Double,CPI.Plot3D.Vector3D)">
+            <summary>
+            Multiplying a vector by a scalar results in a vector with the same (or exactly opposite)
+            direction as the original, but with a different length.
+            </summary>
+            <param name="a">A double.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>
+            A Vector3D instance with the same (or exactly opposite) direction as the original, 
+            but with a length multiplied by the specified number.
+            </returns>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 51-2
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_UnaryNegation(CPI.Plot3D.Vector3D)">
+            <summary>
+            Taking the inverse of a vector maintains its length, but reverses its direction.  
+            (It's the same as multiplying the vector by -1.)
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <returns>The inverse of the specified vector.</returns>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Addition(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Adds two vectors.
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>The sum of the two vectors.</returns>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 54-7
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Subtraction(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Subtracts a vector from another.
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>The results of subtracting the second vector from the first.</returns>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 54-7
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Multiply(CPI.Plot3D.Vector3D,CPI.Plot3D.Vector3D)">
+            <summary>
+            Calculates the dot product of two vectors.
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <param name="b">A Vector3D object.</param>
+            <returns>A double representing the dot product of the two vectors.</returns>
+            <remarks>
+            The dot product comes in very handy when projecting one vector onto another, and it's
+            worth taking the time to understand its geometric interpretation.
+            </remarks>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 58-62
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.op_Division(CPI.Plot3D.Vector3D,System.Double)">
+            <summary>
+            Dividing a vector by a scalar results in a vector with the same (or exactly opposite)
+            direction as the original, but with a different length.
+            </summary>
+            <param name="a">A Vector3D object.</param>
+            <param name="b">A double.</param>
+            <returns>
+            A Vector3D instance with the same (or exactly opposite) direction as the original, 
+            but with a length divided by the specified number.
+            </returns>
+            <remarks>
+            Dividing a vector by a scalar is the same as multiplying the vector by 1 divided by the scalar.
+            </remarks>
+            <see>
+            3D Math Primer for Graphics and Game Development
+            by Fletcher Dunn and Ian Parberry
+            pp. 51-2
+            </see>
+        </member>
+        <member name="M:CPI.Plot3D.Vector3D.Equals(CPI.Plot3D.Vector3D)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified Vector3D structure. 
+            </summary>
+            <param name="other">A Vector3D structure to compare to this instance.</param>
+            <returns>True if the vectors are the same; false otherwise.</returns>
+            <remarks>
+            This is implemented by simply calling the Equals method 
+            on the Point3D endpoints of the two vectors.
+            </remarks>
+        </member>
+    </members>
+</doc>
