@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace WAND_GRAPH
 {
-    class win32
+    public class win32
     {
         public class Win32
         {

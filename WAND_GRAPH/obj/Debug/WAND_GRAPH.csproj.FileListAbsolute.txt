@@ -10,3 +10,15 @@ c:\users\anh khoa\documents\visual studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\ob
 C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.dll
 C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.pdb
 C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\WAND_GRAPH\WAND_GRAPH\bin\Debug\CPI.Plot3D.xml
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\WAND_GRAPH.exe.config
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.exe
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.pdb
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\WAND_GRAPH.exe
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\WAND_GRAPH.pdb
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\CPI.Plot3D.dll
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\CPI.Plot3D.pdb
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\bin\Debug\CPI.Plot3D.xml
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.csprojResolveAssemblyReference.cache
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.Form1.resources
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.Properties.Resources.resources
+C:\Users\Anh Khoa\Documents\Visual Studio 2015\Projects\RENESAS_SLING_RING\WAND_GRAPH\obj\Debug\WAND_GRAPH.csproj.GenerateResource.Cache

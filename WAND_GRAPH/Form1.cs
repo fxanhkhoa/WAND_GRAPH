@@ -74,6 +74,8 @@ namespace WAND_GRAPH
         public const UInt16 RES_X = 1366,
                             RES_Y = 768;
         int flip = 0;
+        public const int FIRST_POINT = 0,
+                         END_POINT = 1;   
         /************************************************************
         *                  Mouse and Keyboard Hook 
         ************************************************************/
@@ -95,6 +97,7 @@ namespace WAND_GRAPH
         Point ep = new Point(1368 / 2, 768 / 2);
         int Radius = 5;
         float pitch, yaw;
+        Symbol symbol;
         /************************************************************
         *                  Get Graphic
         ************************************************************/
@@ -207,16 +210,17 @@ namespace WAND_GRAPH
         }
         void m_oWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (w != string.Empty)
+            {
+                if ((w == "Pitch = ") || (w == "Roll = ") || (w == "Mag = ")) k = 1;
+                //Invoke(new Action(new Action(() => Data_Output.Text = w)));
+            }
+            pitch = Get_Pitch_val(w);
+            yaw = Get_Yaw_val(w);
             //Data_Output.Text = i.ToString();
             if (received_flag == 1)
             {
-                if (w != string.Empty)
-                {
-                    if ((w == "Pitch = ") || (w == "Roll = ") || (w == "Mag = ")) k = 1;
-                    //Invoke(new Action(new Action(() => Data_Output.Text = w)));
-                }
-                pitch = Get_Pitch_val(w);
-                yaw = Get_Yaw_val(w);
+               
                 Invoke(new Action(new Action(() => Bankinh.Text = YAW_CENTER.ToString())));
                 if ((pitch != -1) && (yaw != -1) && (count > 0))
                 {
@@ -275,6 +279,18 @@ namespace WAND_GRAPH
                 }
                 received_flag = 0;
             }
+            else if (received_flag == 2)
+            {
+                axis p = new axis();
+                p.x = yaw;
+                p.y = pitch;
+                if (symbol.current_pos == 0)
+                {
+                    float radius = (float)Math.Sqrt((pitch - PITCH_CENTER) * (pitch - PITCH_CENTER) + (yaw - YAW_CENTER) * (yaw - YAW_CENTER));
+                    symbol.setRADIUS(radius);
+                }
+                symbol.add(p);
+            }
         }
         void m_oWorker_RunWorker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -286,6 +302,14 @@ namespace WAND_GRAPH
             w = serial_port.ReadExisting();
             //w += "\n";
             received_flag = 1;
+            switch (Check_Status(w))
+            {
+                case FIRST_POINT:
+                    received_flag = 2;
+                    break;
+                case END_POINT:
+                    break;
+            };
         }
         void mouseHook_MouseWheel(RamGecTools.MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
@@ -442,38 +466,24 @@ namespace WAND_GRAPH
             else
                 pos.x = (int)((((pitch - (MIN_PITCH)) / (RANGE))) * (RES_Y / 2));
             if (pos.x == 0) pos.x = 1 * (RES_Y / 2);
-
-            if (YAW_CENTER + RANGE > 360) // Case YAW_CENTER is at left of 360
+            if (flip == 0)
             {
-                if ((Math.Abs(yaw - YAW_CENTER) > RANGE) || (yaw > YAW_CENTER))
+                if (YAW_CENTER + RANGE > 360) // Case YAW_CENTER is at left of 360
                 {
-                    if (yaw - YAW_CENTER < 0)
+                    if ((Math.Abs(yaw - YAW_CENTER) > RANGE) || (yaw > YAW_CENTER))
                     {
-                        float temp = 360 - YAW_CENTER + yaw;
-                        pos.y = (int)((temp / RANGE) * (RES_X / 2));
-                        pos.y += RES_X / 2;
-                    }
-                    else
-                    {
-                        float temp = yaw - YAW_CENTER;
-                        pos.y = (int)((temp / RANGE) * (RES_X / 2));
-                        pos.y += RES_X / 2;
-                    }
-                }
-                else
-                {
-                    float temp = YAW_CENTER - yaw;
-                    pos.y = (int)((1 - (temp / RANGE)) * (RES_X / 2));
-                }
-            }
-            else
-            {
-                if ((yaw + YAW_CENTER > 360) || (yaw < YAW_CENTER))
-                {
-                    if (YAW_CENTER - yaw < 0)
-                    {
-                        float temp = yaw - MIN_YAW;
-                        pos.y = (int)((temp / RANGE) * (RES_X / 2)); 
+                        if (yaw - YAW_CENTER < 0)
+                        {
+                            float temp = 360 - YAW_CENTER + yaw;
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            pos.y += RES_X / 2;
+                        }
+                        else
+                        {
+                            float temp = yaw - YAW_CENTER;
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            pos.y += RES_X / 2;
+                        }
                     }
                     else
                     {
@@ -483,10 +493,112 @@ namespace WAND_GRAPH
                 }
                 else
                 {
-                    float temp = yaw - YAW_CENTER;
-                    pos.y = (int)((temp / RANGE) * (RES_X / 2));
-                    pos.y += (RES_X / 2);
+                    if ((yaw + YAW_CENTER > 360) || (yaw < YAW_CENTER))
+                    {
+                        if (YAW_CENTER - yaw < 0)
+                        {
+                            float temp = yaw - MIN_YAW;
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                        }
+                        else
+                        {
+                            float temp = YAW_CENTER - yaw;
+                            pos.y = (int)((1 - (temp / RANGE)) * (RES_X / 2));
+                        }
+                    }
+                    else
+                    {
+                        float temp = yaw - YAW_CENTER;
+                        pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                        pos.y += (RES_X / 2);
+                    }
                 }
+            }
+            else if (flip == 1)
+            {
+                if ((YAW_CENTER < 360) && (YAW_CENTER > 180)) // In the half left
+                {
+                    if (YAW_CENTER + RANGE < 360) // Normal
+                    {
+                        if (yaw > YAW_CENTER) // Turn left
+                        {
+                            float temp = Math.Abs(yaw - MAX_YAW);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                        }
+                        else if ((yaw < YAW_CENTER) && (yaw > MIN_YAW)) // turn right
+                        {
+                            float temp = Math.Abs(yaw - YAW_CENTER);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            pos.y += (RES_X / 2);
+                        }
+                    }
+                    else if (YAW_CENTER + RANGE > 360) // out of RANGE
+                    {
+                        if ((yaw < YAW_CENTER) && (yaw > MIN_YAW)) // turn right
+                        {
+                            float temp = Math.Abs(yaw - YAW_CENTER);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            pos.y += (RES_X / 2);
+                        }
+                        else // turn left
+                        {
+                            if ((yaw < 360) && (yaw > YAW_CENTER)) // still inside [YAW_CENTER, 360]
+                            {
+                                float temp = Math.Abs(yaw - YAW_CENTER);
+                                pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            }
+                            else // outside [YAW_CENTER, 360]
+                            {
+                                float temp = Math.Abs(360 - YAW_CENTER) + yaw;
+                                pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            }
+                        }
+                    }
+                }
+                else if ((YAW_CENTER > 0) && (YAW_CENTER < 180)) // In the half right
+                {
+                    if (YAW_CENTER - RANGE > 0) // normal
+                    {
+                        if (yaw > YAW_CENTER) // Turn left
+                        {
+                            float temp = Math.Abs(yaw - MAX_YAW);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                        }
+                        else if ((yaw < YAW_CENTER) && (yaw > MIN_YAW)) // turn right
+                        {
+                            float temp = Math.Abs(yaw - YAW_CENTER);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                            pos.y += (RES_X / 2);
+                        }
+                    }
+                    else if (YAW_CENTER - RANGE < 0) // out of RANGE
+                    {
+                        if (yaw > YAW_CENTER) // Turn left
+                        {
+                            float temp = Math.Abs(yaw - YAW_CENTER);
+                            pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                        }
+                        else // Turn right
+                        {
+                            if ((yaw > 0) && (yaw < YAW_CENTER)) // still inside [0, YAW_CENTER]
+                            {
+                                float temp = Math.Abs(yaw - YAW_CENTER);
+                                pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                                pos.y += (RES_X / 2);
+                            }
+                            else // outside [0, YAW_CENTER]
+                            {
+                                float temp = YAW_CENTER + Math.Abs(360 - yaw);
+                                pos.y = (int)((temp / RANGE) * (RES_X / 2));
+                                pos.y += (RES_X / 2);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (flip == 2)
+            {
+
             }
             return pos;
         }
@@ -543,6 +655,20 @@ namespace WAND_GRAPH
             mainCube.RotateZ = (float)tZ;
 
             pictureBox1.Image = mainCube.DrawCube(drawOrigin);
+        }
+        private int Check_Status(string s)
+        {
+            switch (s){
+                case "1st Point":
+                    return FIRST_POINT;
+                //break;
+                case "End Point":
+                    return END_POINT;
+                //break;
+                default:
+                    return 0;
+            };
+            //return 0;
         }
     }
 }
