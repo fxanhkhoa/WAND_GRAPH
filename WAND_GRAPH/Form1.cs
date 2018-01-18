@@ -74,8 +74,8 @@ namespace WAND_GRAPH
         public const UInt16 RES_X = 1366,
                             RES_Y = 768;
         int flip = 0;
-        public const int FIRST_POINT = 0,
-                         END_POINT = 1;   
+        public const int FIRST_POINT = 1,
+                         END_POINT = 2;   
         /************************************************************
         *                  Mouse and Keyboard Hook 
         ************************************************************/
@@ -97,7 +97,7 @@ namespace WAND_GRAPH
         Point ep = new Point(1368 / 2, 768 / 2);
         int Radius = 5;
         float pitch, yaw;
-        Symbol symbol;
+        Symbol symbol = new Symbol();
         /************************************************************
         *                  Get Graphic
         ************************************************************/
@@ -110,9 +110,11 @@ namespace WAND_GRAPH
         *                  Serial Port
         ************************************************************/
         static SerialPort Serial_Port;
-        string w;
+        string w, data = "";
         int k = 0;
-        int count = 0, received_flag = 0;
+        int count = 0, received_flag = 1, got_data = 0, good;
+        string pair_str = "";
+        int outvar = 0;
         /*************************************************************************
         *                       BACKGROUND WORKER
         *************************************************************************/
@@ -168,14 +170,16 @@ namespace WAND_GRAPH
             {
                 Serial_Port.Close();
             }
-            Serial_Port.PortName = "COM18";
-            Serial_Port.BaudRate = 38400;
+            Serial_Port.PortName = "COM3";
+            Serial_Port.BaudRate = 9600;
             Serial_Port.DataBits = 8;
             Serial_Port.Parity = Parity.None;
             Serial_Port.StopBits = StopBits.One;
             try
             {
                 Serial_Port.Open();
+                //Serial_Port.Write("AT");
+                //Thread.Sleep(1000);
             }
             catch (Exception ex)
             {
@@ -197,7 +201,7 @@ namespace WAND_GRAPH
                 for (i = 0; i < 100; i++)
                 {
                     //textBox1.Text = i.ToString();
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                     m_oWorker.ReportProgress(i);
                     if (m_oWorker.CancellationPending)
                     {
@@ -210,86 +214,156 @@ namespace WAND_GRAPH
         }
         void m_oWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (w != string.Empty)
+            
+            if ((data != null) ) 
             {
-                if ((w == "Pitch = ") || (w == "Roll = ") || (w == "Mag = ")) k = 1;
-                //Invoke(new Action(new Action(() => Data_Output.Text = w)));
-            }
-            pitch = Get_Pitch_val(w);
-            yaw = Get_Yaw_val(w);
-            //Data_Output.Text = i.ToString();
-            if (received_flag == 1)
-            {
-               
-                Invoke(new Action(new Action(() => Bankinh.Text = YAW_CENTER.ToString())));
-                if ((pitch != -1) && (yaw != -1) && (count > 0))
+                if (data.IndexOf("*") != -1)
                 {
-                    win32.Win32.POINT pos = new win32.Win32.POINT();
-
-                    pos = CalculatePos(pitch, yaw);
-                    Invoke(new Action(new Action(() => Bankinh.Text = pos.y.ToString())));
-                    if (((pos.x - sp.X) > Radius) || ((pos.y - sp.Y) > Radius))
+                    try
                     {
-                        if (flip == 1)
+                        pitch = Get_Pitch_val(data);
+                        yaw = Get_Yaw_val(data);
+                        //Invoke(new Action(() => Bankinh.Text = pitch.ToString() + yaw.ToString()));
+                        if ((pitch != -1) && (yaw != -1)) got_data = 1;
+                        else
                         {
-                            win32.Win32.ClientToScreen(desktop, ref pos);
-                            win32.Win32.SetCursorPos(pos.y, pos.x);
+                            got_data = 0;
+                        }
+                    }
+                    catch
+                    {
+                        //Invoke(new Action(() => label1.Text = pitch.ToString()));
+                    }
+                    //Data_Output.Text = i.ToString();
+                    if (received_flag == 1)
+                    {
+
+                        Invoke(new Action(new Action(() => Bankinh.Text = YAW_CENTER.ToString())));
+                        if ((pitch != -1) && (yaw != -1) && (count > 0))
+                        {
+                            win32.Win32.POINT pos = new win32.Win32.POINT();
+
+                            pos = CalculatePos(pitch, yaw);
+                            Invoke(new Action(new Action(() => Bankinh.Text = pos.y.ToString())));
+                            if (((pos.x - sp.X) > Radius) || ((pos.y - sp.Y) > Radius))
+                            {
+                                if (flip == 1)
+                                {
+                                    win32.Win32.ClientToScreen(desktop, ref pos);
+                                    win32.Win32.SetCursorPos(pos.y, pos.x);
+                                }
+                                else
+                                {
+                                    win32.Win32.ClientToScreen(desktop, ref pos);
+                                    win32.Win32.SetCursorPos(RES_Y - pos.y, pos.x);
+                                }
+                            }
+
+                            ep.X = pos.x;
+                            ep.Y = pos.y;
+                            //Invoke(new Action(new Action(() => mouseLog.Text = pitch.ToString())));
+                            //Invoke(new Action(new Action(() => keyboardLog.Text = pos.x.ToString())));
+                            //xPosLabel.Text = (1 - ((pitch - (MIN_PITCH)) / (PITCH_CENTER - MIN_PITCH))).ToString();
+                            //yPosLabel.Text = (1 - ((pitch - (MIN_PITCH)) / (PITCH_CENTER - MIN_PITCH))).ToString();
+                            //g_desktop.DrawLine(p, sp, ep);
+                            sp = ep;
+
+                            /**************************************
+                             *           Put to Graph
+                             **************************************/
+
+                            chart1.Series["Series1"].Points.Add(pitch);
+                            chart1.Series["Series2"].Points.Add(yaw);
+
+                            chart1.Series["Series1"].ChartType = SeriesChartType.Spline;
+                            chart1.Series["Series1"].Color = Color.Red;
+
+                            chart1.Series["Series2"].ChartType = SeriesChartType.Spline;
+                            chart1.Series["Series2"].Color = Color.Blue;
+
+                            chart1.Series["Series3"].ChartType = SeriesChartType.Spline;
+                            chart1.Series["Series3"].Color = Color.Yellow;
+                            /**************************************
+                             *           Render cube
+                             **************************************/
+                            Render(pitch - PITCH_CENTER, yaw - YAW_CENTER, 0);
+
+                        }
+                        else if ((count == 0) && (pitch != -1) && (yaw != -1) && (pitch < 90) && (yaw < 300))
+                        {
+                            getMAX_MIN(pitch, yaw);
+                            count = 1;
+                        }
+                        //received_flag = 0;
+                    }
+                    else if ((received_flag == 2))
+                    {
+                        Symbol.axis p = new Symbol.axis();
+                        if (symbol.current_pos == 0)
+                        {
+                            float radius = (float)Math.Sqrt((pitch - PITCH_CENTER) * (pitch - PITCH_CENTER) + (yaw - YAW_CENTER) * (yaw - YAW_CENTER));
+                            symbol.setRADIUS(radius);
+                            p.x = YAW_CENTER;
+                            p.y = PITCH_CENTER;
+                            symbol.setCENTER(p);
+                            Invoke(new Action(() => label1.Text = symbol.point[0].x.ToString()));
+                        }
+                        p.x = yaw;
+                        p.y = pitch;
+                        symbol.add(p);
+                        /******* Check Circle *******/
+                        if (symbol.Check_Circle())
+                        {
+                            //Invoke(new Action(() => Percentage.Text ="Circle " + symbol.PERCENTAGE_CIRCLE.ToString()));
+                            //Invoke(new Action(() => Percentage.Text = "TRUE"));
                         }
                         else
                         {
-                            win32.Win32.ClientToScreen(desktop, ref pos);
-                            win32.Win32.SetCursorPos(RES_Y - pos.y, pos.x);
+                            float a = (float)Math.Pow(symbol.point[symbol.current_pos - 1].x - symbol.CENTRAL_POINT.x, 2);
+                            float b = (float)Math.Pow(symbol.point[symbol.current_pos - 1].y - symbol.CENTRAL_POINT.y, 2);
+                            //Invoke(new Action(() => Percentage.Text = "OUT SIDE"));
+                            //Invoke(new Action(() => Bankinh.Text = (a + b).ToString()));
+                        }
+                        /******* Check Vertical *******/
+                        if (symbol.Check_Vertical() == true)
+                        {
+                            //Invoke(new Action(() => Bankinh.Text = "Vertical " + symbol.PERCENTAGE_VERTICAL.ToString()));
+                            Invoke(new Action(() => label2.Text = "Vertical "));
+                        }
+                        else
+                        {
+                            Invoke(new Action(() => label2.Text = " "));
+                        }
+                        /******* Check Horizontal *******/
+                        if (symbol.Check_Horizontal() == true)
+                        {
+                            //Invoke(new Action(() => Bankinh.Text = "Horizontal " + symbol.PERCENTAGE_HORIZONTAL.ToString()));
+                            Invoke(new Action(() => label3.Text = "Horizontal "));
+                        }
+                        else
+                        {
+                            Invoke(new Action(() => label3.Text = " "));
                         }
                     }
-
-                    ep.X = pos.x;
-                    ep.Y = pos.y;
-                    //Invoke(new Action(new Action(() => mouseLog.Text = pitch.ToString())));
-                    //Invoke(new Action(new Action(() => keyboardLog.Text = pos.x.ToString())));
-                    //xPosLabel.Text = (1 - ((pitch - (MIN_PITCH)) / (PITCH_CENTER - MIN_PITCH))).ToString();
-                    //yPosLabel.Text = (1 - ((pitch - (MIN_PITCH)) / (PITCH_CENTER - MIN_PITCH))).ToString();
-                    //g_desktop.DrawLine(p, sp, ep);
-                    sp = ep;
-
-                    /**************************************
-                     *           Put to Graph
-                     **************************************/
-
-                    chart1.Series["Series1"].Points.Add(pitch);
-                    chart1.Series["Series2"].Points.Add(yaw);                
-
-                    chart1.Series["Series1"].ChartType = SeriesChartType.Spline;
-                    chart1.Series["Series1"].Color = Color.Red;
-
-                    chart1.Series["Series2"].ChartType = SeriesChartType.Spline;
-                    chart1.Series["Series2"].Color = Color.Blue;
-
-                    chart1.Series["Series3"].ChartType = SeriesChartType.Spline;
-                    chart1.Series["Series3"].Color = Color.Yellow;
-                    /**************************************
-                     *           Render cube
-                     **************************************/
-                    Render(pitch - PITCH_CENTER, yaw - YAW_CENTER, 0);
-
+                    else if (received_flag == 3)
+                    {
+                        float max = symbol.PERCENTAGE_CIRCLE;
+                        if (max < symbol.PERCENTAGE_HORIZONTAL)
+                        {
+                            max = symbol.PERCENTAGE_HORIZONTAL;
+                            Invoke(new Action(() => label2.Text = "horizontal detected"));
+                        }
+                        if (max < symbol.PERCENTAGE_VERTICAL)
+                        {
+                            max = symbol.PERCENTAGE_VERTICAL;
+                            Invoke(new Action(() => label3.Text = "vertical detected"));
+                        }
+                        Invoke(new Action(() => label1.Text = max.ToString()));
+                        received_flag = 1;
+                    }
+                    data = "";
+                    Invoke(new Action(() => label1.Text = symbol.point[0].x.ToString()));
                 }
-                else if ((count == 0) && (pitch != -1) && (yaw != -1) && (pitch < 90) && (yaw < 300))
-                {
-                    getMAX_MIN(pitch, yaw);
-                    count = 1;
-                }
-                received_flag = 0;
-            }
-            else if (received_flag == 2)
-            {
-                axis p = new axis();
-                p.x = yaw;
-                p.y = pitch;
-                if (symbol.current_pos == 0)
-                {
-                    float radius = (float)Math.Sqrt((pitch - PITCH_CENTER) * (pitch - PITCH_CENTER) + (yaw - YAW_CENTER) * (yaw - YAW_CENTER));
-                    symbol.setRADIUS(radius);
-                }
-                symbol.add(p);
             }
         }
         void m_oWorker_RunWorker_Completed(object sender, RunWorkerCompletedEventArgs e)
@@ -300,16 +374,41 @@ namespace WAND_GRAPH
         {
             SerialPort serial_port = (SerialPort)sender;
             w = serial_port.ReadExisting();
+            //w = serial_port.ReadChar().ToString();
+            data += w;
+            pair_str += w;
+            if (data[data.Length - 1] == '*')
+                Invoke(new Action(new Action(() => Percentage.Text = data)));
+            else
+                Invoke(new Action(new Action(() => Percentage.Text = "")));
             //w += "\n";
-            received_flag = 1;
-            switch (Check_Status(w))
+            if (outvar == 0)
             {
-                case FIRST_POINT:
-                    received_flag = 2;
-                    break;
-                case END_POINT:
-                    break;
-            };
+                if (Check_AT("20C38FF68CEB") == 1)
+                    if (Check_AT("OK+DISCE") == 1)
+                        Serial_Port.Write("AT+CON20C38FF68CEB");
+                if (Check_AT("OK+CONNA") == 1)
+                {
+                    MessageBox.Show("paired");
+                    outvar = 1;
+                }
+            }
+            {
+                switch (Check_Status(data))
+                {
+                    case FIRST_POINT:
+                        received_flag = 2;
+                        Invoke(new Action(new Action(() => label1.Text = "FIRST POINT")));
+                        break;
+                    case END_POINT:
+                        received_flag = 3;
+                        Invoke(new Action(new Action(() => label1.Text = "END POINT")));
+                        break;
+                    default:
+                       //received_flag = 1;
+                        break;
+                };
+            }
         }
         void mouseHook_MouseWheel(RamGecTools.MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
@@ -388,18 +487,42 @@ namespace WAND_GRAPH
             //keyboardKeyPress.BackColor = Color.IndianRed;
             //keyboardLog.Text = "[" + DateTime.Now.ToLongTimeString() + "] KeyDown Event {" + key.ToString() + "}" + Environment.NewLine + keyboardLog.Text;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Serial_Port.Write("AT");
+            Thread.Sleep(1000);
+            if (Check_AT("OK") == 1)
+                //Bankinh.Text = "AT";
+            pair_str = "";
+            Serial_Port.Write("AT+DISC?");
+            Thread.Sleep(1000);
+            if (Check_AT("OK+DISCE") == 1)
+                //MessageBox.Show("OK+DISCE");
+            if (Check_AT("OK+CON") == 1)
+                MessageBox.Show("Paired");
+        }
+
         private float Get_Pitch_val(string s)
         {
-            int i = s.IndexOf("Pitch ");
-            if (i == -1) return -1;
-            int j = i + 6;
-            //string temp = s.Substring(i, 10);// get 1st 10 characters
-            while (s[j] != ' ')
+            try
             {
-                j++;
+                int i = s.IndexOf("Pitch ");
+
+                if (i == -1) return -1;
+                int j = i + 6;
+                //string temp = s.Substring(i, 10);// get 1st 10 characters
+                while (s[j] != ' ')
+                {
+                    j++;
+                }
+                string temp = s.Substring(i + 6, (j - i - 6));
+                return float.Parse(temp);
             }
-            string temp = s.Substring(i + 6, (j - i - 6));
-            return float.Parse(temp);
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
         private void Fill_Check_CheckedChanged(object sender, EventArgs e)
@@ -421,16 +544,23 @@ namespace WAND_GRAPH
 
         private float Get_Yaw_val(string s)
         {
-            int i = s.IndexOf("Yaw ");
-            if (i == -1) return -1;
-            int j = i + 4;
-            //string temp = s.Substring(i, 10);// get 1st 10 characters
-            while (s[j] != ' ')
+            try
             {
-                j++;
+                int i = s.IndexOf("Yaw ");
+                if (i == -1) return -1;
+                int j = i + 4;
+                //string temp = s.Substring(i, 10);// get 1st 10 characters
+                while (s[j] != ' ')
+                {
+                    j++;
+                }
+                string temp = s.Substring(i + 4, (j - i - 4));
+                return float.Parse(temp);
             }
-            string temp = s.Substring(i + 4, (j - i - 4));
-            return float.Parse(temp);
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
         private void SetRadius(int radius)
         {
@@ -658,17 +788,17 @@ namespace WAND_GRAPH
         }
         private int Check_Status(string s)
         {
-            switch (s){
-                case "1st Point":
-                    return FIRST_POINT;
-                //break;
-                case "End Point":
-                    return END_POINT;
-                //break;
-                default:
-                    return 0;
-            };
-            //return 0;
+            if (s.IndexOf("1st Point") > -1)
+                return FIRST_POINT;
+            else if (s.IndexOf("End Point") > -1)
+                return END_POINT;
+            else return 0;
+        }
+        private int Check_AT(string s)
+        {
+            if (pair_str.IndexOf(s) != -1) return 1;
+            else
+            return 0;
         }
     }
 }
